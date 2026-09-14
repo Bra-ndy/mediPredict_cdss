@@ -1,0 +1,469 @@
+﻿/* ViewReport.css */
+
+.view-report {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.view-report-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    color: #64748b;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid #f1f5f9;
+    border-top: 4px solid #2563eb;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.view-report-error {
+    text-align: center;
+    padding: 3rem;
+    max-width: 500px;
+    margin: 4rem auto;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.view-report-error i {
+    font-size: 4rem;
+    color: #ef4444;
+    margin-bottom: 1rem;
+}
+
+.view-report-error h3 {
+    color: #0f172a;
+    margin-bottom: 0.5rem;
+}
+
+.view-report-error p {
+    color: #64748b;
+    margin-bottom: 2rem;
+}
+
+/* Page Header */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.page-header h1 {
+    color: white;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.page-header h1 i {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 0.75rem;
+    border-radius: 14px;
+}
+
+.report-info {
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+}
+
+.report-info strong {
+    color: white;
+}
+
+.header-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+/* Alerts */
+.alert {
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.alert-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* Report Card */
+.report-card {
+    background: white;
+    border-radius: 20px;
+    padding: 3rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* Report Header */
+.report-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+
+
+.header-left h2 {
+    color: #0f172a;
+    margin-bottom: 0.25rem;
+    font-size: 1.5rem;
+}
+
+.header-left p {
+    color: #64748b;
+    font-size: 0.9rem;
+}
+
+.header-right {
+    text-align: right;
+}
+
+.report-type {
+    font-weight: 600;
+    color: #2563eb;
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+}
+
+.report-id-display {
+    color: #64748b;
+    font-family: monospace;
+    font-size: 0.9rem;
+}
+
+/* Patient Section */
+.patient-section {
+    margin-bottom: 2rem;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    color: #0f172a;
+    font-size: 1.2rem;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 0.5rem;
+}
+
+.section-title i {
+    color: #2563eb;
+}
+
+.patient-info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+.info-item {
+    margin-bottom: 0.5rem;
+}
+
+.info-label {
+    color: #64748b;
+    margin-bottom: 0.25rem;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.info-value {
+    font-weight: 600;
+    color: #0f172a;
+}
+
+.patient-id {
+    color: #2563eb;
+    font-family: monospace;
+}
+
+/* Assessment Section */
+.assessment-section {
+    margin-bottom: 2rem;
+}
+
+.assessment-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.assessment-grid h4 {
+    color: #64748b;
+    margin-bottom: 0.75rem;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.vital-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.details-box {
+    background: rgba(37, 99, 235, 0.05);
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.details-box p {
+    margin-bottom: 0.5rem;
+    color: #334155;
+}
+
+.details-box p:last-child {
+    margin-bottom: 0;
+}
+
+/* AI Recommendation */
+.ai-recommendation {
+    margin-top: 2rem;
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(37, 99, 235, 0.1));
+    padding: 1.5rem;
+    border-radius: 12px;
+}
+
+.ai-recommendation h4 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    color: #0f172a;
+}
+
+.ai-recommendation h4 i {
+    color: #8b5cf6;
+}
+
+.recommendation-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.drug-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.drug-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #8b5cf6;
+}
+
+.confidence-badge {
+    background: #8b5cf6;
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+}
+
+.clinician-decision {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.clinician-decision p {
+    margin-bottom: 0.5rem;
+    color: #334155;
+}
+
+/* Report Footer */
+.report-footer {
+    margin-top: 3rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e2e8f0;
+    text-align: center;
+    color: #64748b;
+    font-size: 0.8rem;
+}
+
+.report-footer p {
+    margin-bottom: 0.25rem;
+}
+
+.disclaimer {
+    margin-top: 0.5rem;
+    font-style: italic;
+}
+
+/* Buttons */
+.btn-outline {
+    background: transparent;
+    border: 2px solid #2563eb;
+    color: #2563eb;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    font-size: 0.95rem;
+}
+
+.btn-outline:hover {
+    background: #2563eb;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    font-size: 0.95rem;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+/* Print Styles */
+@media print {
+    .page-header,
+    .header-actions,
+    .alert,
+    .btn-outline,
+    .btn-primary {
+        display: none !important;
+    }
+
+    .view-report {
+        padding: 0;
+    }
+
+    .report-card {
+        box-shadow: none !important;
+        border: 1px solid #ddd !important;
+        padding: 0.5in;
+    }
+
+    body {
+        background: white !important;
+    }
+
+    .patient-info-grid {
+        break-inside: avoid;
+    }
+
+    .assessment-grid {
+        break-inside: avoid;
+    }
+
+    .ai-recommendation {
+        break-inside: avoid;
+        background: #f3e8ff;
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .view-report {
+        padding: 1rem;
+    }
+
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .header-actions {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .header-actions button,
+    .header-actions a {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .report-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .header-right {
+        text-align: left;
+    }
+
+    .patient-info-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .assessment-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .vital-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .drug-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .report-card {
+        padding: 1.5rem;
+    }
+}

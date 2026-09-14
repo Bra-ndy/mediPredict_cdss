@@ -1,0 +1,101 @@
+﻿from flask import Blueprint, request, jsonify, current_app
+from app.models import User, AuditLog
+from app import db
+from datetime import datetime, timedelta
+from sqlalchemy import func, or_
+from app.utils.auth import token_required, admin_required
+
+bp = Blueprint('admin', __name__, url_prefix='/admin')
+
+@bp.route('/stats', methods=['GET'])
+@token_required
+@admin_required
+def get_stats(current_user):
+    """Get admin dashboard statistics"""
+    try:
+        # Get counts
+        pending_count = User.query.filter_by(role='pending').count()
+        active_count = User.query.filter_by(is_active=True, role='clinician').count()
+        total_users = User.query.count()
+        audit_count = AuditLog.query.count()
+        
+        # Get recent audit logs for dashboard
+        recent_audits = AuditLog.query.order_by(AuditLog.timestamp.desc()).limit(5).all()
+        
+        return jsonify({
+            'pending_count': pending_count,
+            'active_count': active_count,
+            'total_users': total_users,
+            'audit_count': audit_count,
+            'recent_audits': [audit.to_dict() for audit in recent_audits]
+        }), 200
+        
+    except Exception as e:
+        return jsonify({'message': f'Error fetching stats: {str(e)}'}), 500
+
+@bp.route('/dashboard', methods=['GET'])
+@token_required
+@admin_required
+def dashboard(current_user):
+    """Admin dashboard endpoint"""
+    try:
+        # Get all stats for dashboard
+        stats = {
+            'pending_count': User.query.filter_by(role='pending').count(),
+            'active_count': User.query.filter_by(is_active=True, role='clinician').count(),
+            'total_users': User.query.count(),
+            'audit_count': AuditLog.query.count()
+        }
+        
+        # Get recent audit logs
+        recent_audits = AuditLog.query.order_by(AuditLog.timestamp.desc()).limit(10).all()
+        audit_list = []
+        for audit in recent_audits:
+            audit_list.append({
+                'id': audit.id,
+                'timestamp': audit.timestamp.isoformat() if audit.timestamp else None,
+                'user': {
+                    'id': audit.user.id if audit.user else None,
+                    'full_name': audit.user.full_name if audit.user else 'System'
+                } if audit.user else None,
+                'action': audit.action,
+                'ip_address': audit.ip_address,
+                'success': audit.success,
+                'details': audit.details
+            })
+        
+        # Get system status
+        system_status = {
+            'database': 'Connected',
+            'db_type': 'SQLite',
+            'db_location': current_app.config.get('SQLALCHEMY_DATABASE_URI', 'instance/app.db'),
+            'ml_status': 'Loaded' if check_ml_model() else 'Not Loaded',
+            'ml_model': 'Drug Recommendation',
+            'ml_version': '1.0.0'
+        }
+        
+        return jsonify({
+            'stats': stats,
+            'recent_audits': audit_list,
+            'system_status': system_status
+        }), 200
+        
+    except Exception as e:
+        return jsonify({'message': f'Error loading dashboard: {str(e)}'}), 500
+
+# Rest of your admin.py routes remain the same...
+# (Continue with all the other routes: get_pending_users, get_pending_count, get_verified_users, etc.)
+
+def check_ml_model():
+    """Helper function to check if ML model is loaded"""
+    try:
+        import joblib
+        import os
+        model_path = current_app.config.get('ML_MODEL_PATH', 'ml/models/drug_model.joblib')
+        if os.path.exists(model_path):
+            # Try to load the model
+            joblib.load(model_path)
+            return True
+        return False
+    except:
+        return False

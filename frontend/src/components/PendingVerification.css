@@ -1,0 +1,150 @@
+/* components/PendingVerification.css */
+
+.pending-container {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+  
+  .pending-card {
+    background: white;
+    border-radius: 24px;
+    padding: 3rem;
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  }
+  
+  .pending-icon {
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 2rem;
+    font-size: 3rem;
+    color: white;
+    animation: pulse 2s infinite;
+  }
+  
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7);
+    }
+    70% {
+      transform: scale(1.05);
+      box-shadow: 0 0 0 10px rgba(245, 158, 11, 0);
+    }
+    100% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(245, 158, 11, 0);
+    }
+  }
+  
+  .pending-card h1 {
+    font-size: 2rem;
+    color: #1e293b;
+    margin-bottom: 1rem;
+  }
+  
+  .pending-card p {
+    color: #64748b;
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+  }
+  
+  .pending-info {
+    background: #f8fafc;
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+    text-align: left;
+  }
+  
+  .info-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  
+  .info-item:last-child {
+    border-bottom: none;
+  }
+  
+  .info-item i {
+    width: 24px;
+    color: #f59e0b;
+    font-size: 1.1rem;
+  }
+  
+  .info-item span {
+    color: #334155;
+    font-size: 0.95rem;
+  }
+  
+  .info-item strong {
+    color: #f59e0b;
+    font-weight: 600;
+  }
+  
+  .pending-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+  }
+  
+  .pending-actions .btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+  }
+  
+  .pending-actions .btn-primary {
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    color: white;
+    border: none;
+  }
+  
+  .pending-actions .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px -5px rgba(245, 158, 11, 0.4);
+  }
+  
+  .pending-actions .btn-outline {
+    background: transparent;
+    border: 2px solid #e2e8f0;
+    color: #64748b;
+  }
+  
+  .pending-actions .btn-outline:hover {
+    border-color: #f59e0b;
+    color: #f59e0b;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .pending-card {
+      padding: 2rem;
+    }
+  
+    .pending-card h1 {
+      font-size: 1.5rem;
+    }
+  
+    .pending-actions {
+      flex-direction: column;
+    }
+  }
