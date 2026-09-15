@@ -1,41 +1,65 @@
 import os
 from app import create_app, db
+from flask_cors import CORS
 
 app = create_app(os.getenv('FLASK_CONFIG') or 'production')
 
 # ===========================================================
-# ONE-TIME DATABASE INITIALIZATION
+# FORCE CORS CONFIGURATION (safety net)
 # ===========================================================
-# This runs on every startup, but is SAFE because:
-# 1. db.create_all() only creates tables that don't exist
-# 2. Admin user creation checks if admin already exists
-# 3. No data is ever overwritten
+# This overrides any CORS settings in app/__init__.py to ensure
+# the headers are always sent correctly.
 # ===========================================================
 
+raw_origins = os.getenv(
+    'CORS_ORIGINS',
+    'https://medipredict-frontend-9zec.onrender.com,http://localhost:3000'
+)
+
+allowed_origins = [o.strip() for o in raw_origins.split(',') if o.strip()]
+
+print(f"🔒 CORS allowed origins: {allowed_origins}")
+
+# Remove any existing CORS extension and reapply
+# flask-cors attaches itself as an extension; applying twice is safe
+CORS(
+    app,
+    resources={r"/*": {"origins": allowed_origins}},
+    supports_credentials=True,
+    allow_headers=["Content-Type", "Authorization", "X-Requested-With"],
+    methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
+    expose_headers=["Content-Type", "Authorization"],
+    max_age=3600,
+    send_wildcard=False
+)
+
+# ===========================================================
+# HEALTH CHECK
+# ===========================================================
+@app.route('/health', methods=['GET', 'OPTIONS'])
+def health_check():
+    return {"status": "healthy", "service": "MediPredict CDSS"}, 200
+
+# ===========================================================
+# ONE-TIME DATABASE INITIALIZATION
+# ===========================================================
 def initialize_database():
-    """Initialize database tables and admin user (idempotent)."""
     with app.app_context():
         try:
-            # Import models so SQLAlchemy knows about them
             from app.models import User
             from datetime import datetime
-            
-            # Step 1: Create tables (safe - skips existing tables)
+
             db.create_all()
             print("✅ Database tables verified")
-            
-            # Step 2: Check if admin exists
+
             admin_email = 'admin@medipredict.com'
             existing_admin = User.query.filter_by(email=admin_email).first()
-            
+
             if existing_admin:
-                # Admin already exists - DO NOTHING
                 print(f"✅ Admin already exists: {admin_email}")
                 print(f"   Role: {existing_admin.role}")
                 print(f"   Verified: {existing_admin.is_verified}")
-                print(f"   Active: {existing_admin.is_active}")
             else:
-                # First time - create admin user
                 print(f"📝 First-time setup: Creating admin user...")
                 admin = User(
                     full_name='System Administrator',
@@ -48,18 +72,15 @@ def initialize_database():
                 admin.set_password('Admin@123')
                 db.session.add(admin)
                 db.session.commit()
-                print(f"✅ Admin created successfully!")
-                print(f"   Email: {admin_email}")
+                print(f"✅ Admin created: {admin_email}")
                 print(f"   Password: Admin@123")
-                print(f"   ⚠️  CHANGE PASSWORD AFTER FIRST LOGIN")
-                
+
         except Exception as e:
             print(f"⚠️ Initialization error: {e}")
             import traceback
             traceback.print_exc()
             db.session.rollback()
 
-# Run initialization once on startup
 initialize_database()
 
 # ===========================================================
