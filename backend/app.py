@@ -1,7 +1,7 @@
 import os
 from app import create_app
 
-# Create Flask app
+# Create Flask app instance for Gunicorn
 app = create_app(os.getenv('FLASK_CONFIG') or 'production')
 
 if __name__ == '__main__':
