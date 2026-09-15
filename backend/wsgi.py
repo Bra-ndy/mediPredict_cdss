@@ -7,10 +7,6 @@ app = create_app(os.getenv('FLASK_CONFIG') or 'production')
 # ===========================================================
 # FORCE CORS CONFIGURATION (safety net)
 # ===========================================================
-# This overrides any CORS settings in app/__init__.py to ensure
-# the headers are always sent correctly.
-# ===========================================================
-
 raw_origins = os.getenv(
     'CORS_ORIGINS',
     'https://medipredict-frontend-9zec.onrender.com,http://localhost:3000'
@@ -20,8 +16,6 @@ allowed_origins = [o.strip() for o in raw_origins.split(',') if o.strip()]
 
 print(f"🔒 CORS allowed origins: {allowed_origins}")
 
-# Remove any existing CORS extension and reapply
-# flask-cors attaches itself as an extension; applying twice is safe
 CORS(
     app,
     resources={r"/*": {"origins": allowed_origins}},
@@ -32,13 +26,6 @@ CORS(
     max_age=3600,
     send_wildcard=False
 )
-
-# ===========================================================
-# HEALTH CHECK
-# ===========================================================
-@app.route('/health', methods=['GET', 'OPTIONS'])
-def health_check():
-    return {"status": "healthy", "service": "MediPredict CDSS"}, 200
 
 # ===========================================================
 # ONE-TIME DATABASE INITIALIZATION
